@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic';
 
-import { startWorkflow, resumeWorkflow, getWorkflowState } from '@/lib/langgraph';
+import { startWorkflow, resumeWorkflow } from '@/lib/langgraph';
 import { addHistoryEntry } from '@/lib/history';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -57,8 +57,9 @@ export async function POST(req: Request) {
 
       return Response.json({
         threadId,
+        refinedPrompt: state.refinedPrompt,
         cost: state.cost,
-        status: 'confirmed',
+        status: 'planning',
       });
     }
 

@@ -28,7 +28,6 @@ export default function Home() {
 
   useEffect(() => {
     loadHistory();
-    loadStats();
   }, []);
 
   async function loadHistory() {
@@ -39,16 +38,6 @@ export default function Home() {
       setStats(data.stats || null);
     } catch (err) {
       console.error('Failed to load history:', err);
-    }
-  }
-
-  async function loadStats() {
-    try {
-      const res = await fetch('/api/history');
-      const data = await res.json();
-      setStats(data.stats || null);
-    } catch (err) {
-      console.error('Failed to load stats:', err);
     }
   }
 

@@ -60,13 +60,14 @@ export async function resumeWorkflow(threadId: string, refinedPrompt?: string) {
 
   if (refinedPrompt) {
     const command = new Command({ resume: true, update: { refinedPrompt } });
-    const result = await graph.invoke(command as any, config);
-    return { result, threadId, config };
+    await graph.invoke(command as any, config);
+  } else {
+    const command = new Command({ resume: true });
+    await graph.invoke(command as any, config);
   }
 
-  const command = new Command({ resume: true });
-  const result = await graph.invoke(command as any, config);
-  return { result, threadId, config };
+  const state = await graph.getState(config);
+  return { result: state.values, threadId, config };
 }
 
 export async function getWorkflowState(threadId: string) {
